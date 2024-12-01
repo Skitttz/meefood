@@ -35,6 +35,39 @@ export interface IGetOrderDetailsResponse{
     }[]
 }
 
+interface OrdersAmount {
+  amount: number;
+}
+interface DiffFromPreviousPeriod {
+  diffFromLastMonth: number;
+}
+interface DiffFromYesterday {
+  diffFromYesterday: number;
+}
+
+export interface IGetDayOrdersAmountResponse extends OrdersAmount, DiffFromYesterday {}
+
+export interface IGetMonthOrdersAmountResponse extends OrdersAmount, DiffFromPreviousPeriod {}
+
+export interface IGetMonthCanceledOrdersAmountResponse extends OrdersAmount, DiffFromPreviousPeriod {}
+
+export interface IGetMonthRevenueResponse extends DiffFromPreviousPeriod {receipt: number}
+
+export type IGetPopularProducts = {
+  amount: number
+  product: string
+}[];
+
+export interface IGetDailyRevenueInPeriodQuery {
+  from?: Date
+  to?: Date
+}
+
+export type IGetDailyRevenueInPeriodResponse = {
+  date: string
+  receipt: number
+}[];
+
 
 export interface IOrderTableRow{
   order:{
@@ -57,6 +90,11 @@ export interface IGetOrdersQuery{
   customerName?: string | null
   status?: string | null
 }
+
+export interface IOrderDetailsParams{
+  orderId: string;
+}
+
 
 export type IOrderStatus =
 | 'pending'
