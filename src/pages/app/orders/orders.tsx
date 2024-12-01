@@ -6,13 +6,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Helmet } from "react-helmet-async";
-import { OrdersTableRow } from "./orders-table-row";
-import { OrderTableFilter } from "./orders-table-filter";
+import { OrdersTableRow } from "./order-table-row";
+import { OrderTableFilter } from "./order-table-filter";
 import { Pagination } from "@/components/ui/pagination";
 import { useQuery } from "@tanstack/react-query";
 import { getOrders } from "@/api/get-orders";
 import { useSearchParams } from "react-router-dom";
 import { z } from "zod";
+import { OrderTableSkeleton } from "./order-skeleton";
 
 function Orders() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -23,7 +24,7 @@ function Orders() {
     .number()
     .transform((page) => page - 1)
     .parse(searchParams.get("page") ?? "1");
-  const { data: result } = useQuery({
+  const { data: result, isLoading: isLoadingOrders } = useQuery({
     queryKey: ["orders", pageIndex, orderId, customerName, status],
     queryFn: () =>
       getOrders({
@@ -63,6 +64,7 @@ function Orders() {
                 </TableRow>
               </TableHeader>
               <TableBody>
+                {isLoadingOrders && <OrderTableSkeleton />}
                 {result &&
                   result.orders.map((order) => {
                     return <OrdersTableRow key={order.orderId} order={order} />;

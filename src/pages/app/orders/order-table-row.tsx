@@ -2,17 +2,21 @@ import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { DialogTrigger } from "@components/ui/dialog";
-import { ArrowRight, Search, X } from "lucide-react";
-import { OrderDetails } from "./orders-details";
+import { Search, X } from "lucide-react";
+import { OrderDetails } from "./order-details";
 import { IOrderTableRow } from "@/interfaces/orders-data";
 import { OrderStatus } from "@/components/ui/order-status";
 import { formatterValueCurrency } from "@/utils/formatter";
 import { formatDistanceToNow } from "date-fns";
 import { useState } from "react";
+import { disableButtonAprove } from "@/constants/generalConstants";
+import { useOrderActions } from "@/hooks/useOrderActions";
+import { ButtonStatus } from "@/components/ui/button-status";
 
 function OrdersTableRow({ order }: IOrderTableRow) {
   const { orderId, status, customerName, total, createdAt } = order;
-  const [isDetailsOpenState, setIsDetailsOpenState] = useState(false);
+  const [isDetailsOpenState, setIsDetailsOpenState] = useState<boolean>(false);
+  const { cancelOrderFn, isCancelingOrder } = useOrderActions();
   return (
     <TableRow>
       <TableCell>
@@ -35,19 +39,20 @@ function OrdersTableRow({ order }: IOrderTableRow) {
       <TableCell>
         <OrderStatus key={orderId} statusOrder={status} />
       </TableCell>
-
       <TableCell className="font-medium">{customerName}</TableCell>
       <TableCell className="font-medium">
-        {formatterValueCurrency(total)}
+        {formatterValueCurrency(total / 100)}
       </TableCell>
       <TableCell>
-        <Button variant={"outline"} size={"xs"}>
-          <ArrowRight className="h-3 w-3" />
-          {"Approve"}
-        </Button>
+        <ButtonStatus status={status} orderId={orderId} />
       </TableCell>
       <TableCell>
-        <Button variant={"ghost"} size={"xs"}>
+        <Button
+          disabled={disableButtonAprove(status, isCancelingOrder)}
+          variant={"ghost"}
+          size={"xs"}
+          onClick={() => cancelOrderFn({ orderId })}
+        >
           <X className="h-3 w-3" />
           {"Cancel"}
         </Button>
