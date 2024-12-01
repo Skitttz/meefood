@@ -1,13 +1,15 @@
 import { AppRoutesEnum } from "@/routes/routes";
 import { SignUpForm } from "@/validations/signUpValidations";
-import { Label, Input, Button } from "@components/ui/index";
+import { Label, Input, Button, buttonVariants } from "@components/ui/index";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
 import { registerRestaurant } from "@/api/register-restaurant";
 import { ErrorMessages, SuccessMessages } from "@/constants/generalConstants";
+import { ArrowRight, HousePlusIcon } from "lucide-react";
+import { twMerge } from "tailwind-merge";
 
 export function SignUp() {
   const {
@@ -21,19 +23,24 @@ export function SignUp() {
     mutationFn: registerRestaurant,
   });
 
-  async function handleSignUp(data: SignUpForm) {
+  async function handleSignUp({
+    email,
+    managerName,
+    phone,
+    restaurantName,
+  }: SignUpForm) {
     try {
       await registerRestaurantFn({
-        restaurantName: data.restaurantName,
-        managerName: data.managerName,
-        email: data.email,
-        phone: data.phone,
+        restaurantName,
+        managerName,
+        email,
+        phone,
       });
       toast.success(SuccessMessages.RegisterRestaurant, {
         action: {
           label: "Login",
           onClick: () => {
-            navigate(`${AppRoutesEnum.SIGN_IN}?email=${data.email}`);
+            navigate(`${AppRoutesEnum.SIGN_IN}?email=${email}`);
           },
         },
       });
@@ -44,7 +51,16 @@ export function SignUp() {
   return (
     <>
       <Helmet title="Sign Up" />
-      <div className="p-8">
+      <div className="lg:p-8">
+        <Link
+          to={AppRoutesEnum.SIGN_IN}
+          className={twMerge(
+            buttonVariants({ variant: "ghost" }),
+            "absolute right-4 top-4 border border-none hover:bg-transparent md:right-8 md:top-8",
+          )}
+        >
+          Back to login <ArrowRight className="h-4 w-4" />
+        </Link>
         <div className="flex w-[350px] flex-col justify-center gap-6">
           <div className="flex flex-col gap-2 text-center">
             <h1 className="text-center text-2xl font-semibold tracking-tight">
@@ -60,6 +76,7 @@ export function SignUp() {
               <Input
                 placeholder="Enter your restaurant name"
                 id="restaurantName"
+                required
                 autoCorrect="off"
                 {...register("restaurantName")}
               />
@@ -69,6 +86,7 @@ export function SignUp() {
               <Input
                 placeholder="Enter your manager name"
                 id="name"
+                required
                 autoCorrect="off"
                 {...register("managerName")}
               />
@@ -81,6 +99,7 @@ export function SignUp() {
                 autoCorrect="off"
                 placeholder="example@email.com"
                 id="email"
+                required
                 {...register("email")}
               />
             </div>
@@ -92,8 +111,12 @@ export function SignUp() {
                 {...register("phone")}
               />
             </div>
-            <Button disabled={isSubmitting} className="w-full" type="submit">
-              Complete Registration
+            <Button
+              disabled={isSubmitting}
+              className="w-full font-semibold"
+              type="submit"
+            >
+              Get Started Now <HousePlusIcon className="h-3 w-3" />
             </Button>
             <p className="text-muted-foreground px-6 text-center text-sm leading-relaxed">
               Registering signifies your agreement to our{" "}

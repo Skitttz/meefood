@@ -47,10 +47,10 @@ export function SignIn() {
           to={AppRoutesEnum.SING_UP}
           className={twMerge(
             buttonVariants({ variant: "ghost" }),
-            "absolute right-4 top-4 md:right-8 md:top-8",
+            "bg-primary/5 hover:bg-primary/80 absolute right-4 top-4 border md:right-8 md:top-8",
           )}
         >
-          Register Restaurant
+          New Restaurant
         </Link>
         <div className="flex w-[350px] flex-col justify-center gap-6">
           <div className="flex flex-col gap-2 text-center">
