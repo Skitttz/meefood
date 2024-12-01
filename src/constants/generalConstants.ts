@@ -1,4 +1,4 @@
-import { OrderConfig } from "@/interfaces/orders-data";
+import { IOrderStatus, OrderConfig } from "@/interfaces/orders-data";
 import colors from "tailwindcss/colors";
 
 export const mockDatasetRevenue =   [
@@ -87,4 +87,9 @@ export const SuccessMessages = {
   [MessageEnum.RegisterRestaurant]: "Restaurant successfully registered!",
   [MessageEnum.Authenticaded]: "Successfully. Authentication link sent to your email",
   [MessageEnum.UpdateRestaurantProfile]: "The restaurant profile was successfully updated.",
+};
+
+
+export const disableButtonApprove = (status:IOrderStatus, anotherCondition: boolean):boolean =>  {
+  return !['pending','processing'].includes(status) || anotherCondition
 };

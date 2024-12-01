@@ -9,7 +9,7 @@ import { OrderStatus } from "@/components/ui/order-status";
 import { formatterValueCurrency } from "@/utils/formatter";
 import { formatDistanceToNow } from "date-fns";
 import { useState } from "react";
-import { disableButtonAprove } from "@/constants/generalConstants";
+import { disableButtonApprove } from "@/constants/generalConstants";
 import { useOrderActions } from "@/hooks/useOrderActions";
 import { ButtonStatus } from "@/components/ui/button-status";
 
@@ -48,7 +48,7 @@ function OrdersTableRow({ order }: IOrderTableRow) {
       </TableCell>
       <TableCell>
         <Button
-          disabled={disableButtonAprove(status, isCancelingOrder)}
+          disabled={disableButtonApprove(status, isCancelingOrder)}
           variant={"ghost"}
           size={"xs"}
           onClick={() => cancelOrderFn({ orderId })}
