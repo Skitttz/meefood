@@ -1,7 +1,4 @@
-import {
-  COLORS_RECHARTS_ITEM,
-  mockDatasetProduct,
-} from "@/constants/generalConstants";
+import { COLORS_RECHARTS_ITEM } from "@/constants/generalConstants";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import {
   Card,
@@ -11,8 +8,15 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { PieLabel } from "@/components/ui/custom-pie-label";
+import { useQuery } from "@tanstack/react-query";
+import { getPopularProducts } from "@/api/get-popular-products";
+import { PopularProductSkeleton } from "./recharts-skeleton";
 
 function PopularProductChart() {
+  const { data: popularProducts } = useQuery({
+    queryKey: ["metrics", "popular-products"],
+    queryFn: getPopularProducts,
+  });
   return (
     <Card className="col-span-3">
       <CardHeader className="pb-8">
@@ -24,34 +28,36 @@ function PopularProductChart() {
         </div>
       </CardHeader>
       <CardContent>
-        <ResponsiveContainer width="100%" height={248}>
-          <PieChart style={{ fontSize: 12 }}>
-            <Pie
-              data={mockDatasetProduct}
-              dataKey={"amount"}
-              nameKey={"product"}
-              cx={"50%"}
-              cy={"50%"}
-              outerRadius={86}
-              labelLine={false}
-              innerRadius={64}
-              strokeWidth={8}
-              label={(props) =>
-                PieLabel({ ...props, data: mockDatasetProduct })
-              }
-            >
-              {mockDatasetProduct.map((_, index) => {
-                return (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={COLORS_RECHARTS_ITEM[index]}
-                    className="stroke-inherit hover:opacity-80"
-                  />
-                );
-              })}
-            </Pie>
-          </PieChart>
-        </ResponsiveContainer>
+        {popularProducts ? (
+          <ResponsiveContainer width="100%" height={248}>
+            <PieChart style={{ fontSize: 12 }}>
+              <Pie
+                data={popularProducts}
+                dataKey={"amount"}
+                nameKey={"product"}
+                cx={"50%"}
+                cy={"50%"}
+                outerRadius={86}
+                labelLine={false}
+                innerRadius={64}
+                strokeWidth={8}
+                label={(props) => PieLabel({ ...props, data: popularProducts })}
+              >
+                {popularProducts.map((_, index) => {
+                  return (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS_RECHARTS_ITEM[index]}
+                      className="stroke-inherit hover:opacity-80"
+                    />
+                  );
+                })}
+              </Pie>
+            </PieChart>
+          </ResponsiveContainer>
+        ) : (
+          <PopularProductSkeleton />
+        )}
       </CardContent>
     </Card>
   );
