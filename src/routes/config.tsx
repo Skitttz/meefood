@@ -5,12 +5,13 @@ import { AuthLayout } from "@/pages/_layouts/auth";
 import { SignIn, SignUp } from "@pages/auth/index";
 import { Dashboard, Orders } from "@pages/app/index";
 import { NotFound } from "@/pages/not-found";
+import { Error } from "@/pages/error";
 
 export const RouteConfig = () => {
   const routes: RouteObject[] = [
     {
       path: AppRoutesEnum.BASE,
-      errorElement: <NotFound />,
+      errorElement: <Error />,
       children: [
         {
           path: AppRoutesEnum.BASE,
