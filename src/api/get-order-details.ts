@@ -1,11 +1,12 @@
-import { IGetOrderDetailsResponse } from "@/interfaces/orders-data";
+import { IGetOrderDetailsResponse, IOrderDetailsParams } from "@/interfaces/orders-data";
 import { api } from "@/lib/axios";
+import { ApiRoutesEnum } from "@/routes/routes";
 
-interface IGetOrderDetailsParams {
-  orderId: string
-}
-
-export async function getOrderDetails({orderId}:IGetOrderDetailsParams ): Promise<IGetOrderDetailsResponse>{
-  const response = await api.get(`/orders/${orderId}`);
-  return response.data;
+export async function getOrderDetails({ orderId }: IOrderDetailsParams) {
+    try {
+        const response = await api.get<IGetOrderDetailsResponse>(`${ApiRoutesEnum.ORDERS}/${orderId}`);
+        return response.data;
+    } catch (error) {
+        throw new Error("Unable to receive order details. Please try again later.");
+    }
 }
