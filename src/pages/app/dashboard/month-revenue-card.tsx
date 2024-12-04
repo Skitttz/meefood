@@ -5,10 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 import { DollarSign } from "lucide-react";
 import { MetricCardSkeleton } from "./metric-card-skeleton";
 
-function Skeleton() {
-  return <div className="h-6 w-full animate-pulse rounded bg-gray-300"></div>;
-}
-
 function MonthRevenueCard() {
   const { data: monthRevenue, isLoading } = useQuery({
     queryFn: getMonthRevenue,
@@ -17,7 +13,6 @@ function MonthRevenueCard() {
 
   const receipt = monthRevenue?.receipt;
   const diffFromLastMonth = monthRevenue?.diffFromLastMonth;
-
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
