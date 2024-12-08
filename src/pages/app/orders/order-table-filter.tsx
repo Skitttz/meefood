@@ -88,7 +88,10 @@ function OrderTableFilter() {
               value={value}
               disabled={disabled}
             >
-              <SelectTrigger className="h-8 w-[180px]">
+              <SelectTrigger
+                className="h-8 w-[180px]"
+                data-testid="select-element"
+              >
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
