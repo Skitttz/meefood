@@ -16,6 +16,7 @@ export enum ApiRoutesEnum  {
   PROFILE = "/profile",
   SIGN_OUT = '/sign-out',
   ORDERS = '/orders',
+  ORDERS_WITH_PARAMS = '/orders/:orderId',
   DAY_ORDERS_AMOUNT = '/metrics/day-orders-amount',
   MONTH_ORDERDS_AMOUNT ='/metrics/month-orders-amount',
   MONTH_ORDERDS_CANCELED_AMOUNT ='/metrics/month-canceled-orders-amount',
