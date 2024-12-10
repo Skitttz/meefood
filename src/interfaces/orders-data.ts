@@ -95,6 +95,16 @@ export interface IOrderDetailsParams{
   orderId: string;
 }
 
+interface IOrderActionParams {
+  orderId: string;
+}
+
+export interface IOrderApproveParams extends IOrderActionParams{}
+export interface IOrderCancelParams extends IOrderActionParams{}
+export interface IOrderDispatchParams extends IOrderActionParams{}
+export interface IOrderDeliverParams extends IOrderActionParams{}
+
+
 
 export type IOrderStatus =
 | 'pending'
