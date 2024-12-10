@@ -2,7 +2,7 @@ import { AppRoutesEnum } from "@/routes/routes";
 import { SignUpForm } from "@/validations/signUpValidations";
 import { Label, Input, Button, buttonVariants } from "@components/ui/index";
 import { Helmet } from "react-helmet-async";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
@@ -10,11 +10,13 @@ import { registerRestaurant } from "@/api/register-restaurant";
 import { ErrorMessages, SuccessMessages } from "@/constants/generalConstants";
 import { ArrowRight, HousePlusIcon } from "lucide-react";
 import { twMerge } from "tailwind-merge";
+import { formatPhoneNumber } from "@/utils/formatter";
 
 export function SignUp() {
   const {
     register,
     handleSubmit,
+    control,
     formState: { isSubmitting },
   } = useForm<SignUpForm>();
   const navigate = useNavigate();
@@ -66,7 +68,7 @@ export function SignUp() {
             <h1 className="text-center text-2xl font-semibold tracking-tight">
               Sign In
             </h1>
-            <p className="text-muted-foreground text-sm">
+            <p className="text-sm text-muted-foreground">
               Become a Partner and Start Selling
             </p>
           </div>
@@ -105,10 +107,22 @@ export function SignUp() {
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">Phone</Label>
-              <Input
-                placeholder="(00) 09999-9999"
-                id="phone"
-                {...register("phone")}
+              <Controller
+                name="phone"
+                control={control}
+                defaultValue=""
+                render={({ field }: any) => (
+                  <Input
+                    placeholder="(00) 09999-9999"
+                    id="phone"
+                    {...field}
+                    maxLength={15}
+                    onChange={(e) => {
+                      const formatted = formatPhoneNumber(e.target.value);
+                      field.onChange(formatted);
+                    }}
+                  />
+                )}
               />
             </div>
             <Button
@@ -118,18 +132,18 @@ export function SignUp() {
             >
               Get Started Now <HousePlusIcon className="h-3 w-3" />
             </Button>
-            <p className="text-muted-foreground px-6 text-center text-sm leading-relaxed">
+            <p className="px-6 text-center text-sm leading-relaxed text-muted-foreground">
               Registering signifies your agreement to our{" "}
               <a
                 href={AppRoutesEnum.TERMS}
-                className="hover:text-primary underline underline-offset-4"
+                className="underline underline-offset-4 hover:text-primary"
               >
                 Terms of Service
               </a>{" "}
               and
               <a
                 href={AppRoutesEnum.PRIVACY}
-                className="hover:text-primary underline underline-offset-4"
+                className="underline underline-offset-4 hover:text-primary"
               >
                 {" "}
                 Privacy Policy
