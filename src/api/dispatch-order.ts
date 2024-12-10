@@ -1,8 +1,8 @@
-import { IOrderDetailsParams } from "@/interfaces/orders-data";
+import { IOrderDispatchParams } from "@/interfaces/orders-data";
 import { api } from "@/lib/axios";
 import { ApiRoutesEnum } from "@/routes/routes";
 
-export async function dispatchOrder({ orderId }: IOrderDetailsParams): Promise<void> {
+export async function dispatchOrder({ orderId }: IOrderDispatchParams): Promise<void> {
     try {
         await api.patch(`${ApiRoutesEnum.ORDERS}/${orderId}/dispatch`);
     } catch  {
