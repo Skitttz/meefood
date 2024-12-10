@@ -1,6 +1,6 @@
 import { IGetOrdersQuery, IGetOrdersResponse } from "@/interfaces/orders-data";
 import { api } from "@/lib/axios";
-import { AppRoutesEnum } from "@/routes/routes";
+import { ApiRoutesEnum } from "@/routes/routes";
 
 export async function getOrders({
   pageIndex,
@@ -9,7 +9,7 @@ export async function getOrders({
   status,
 }: IGetOrdersQuery): Promise<IGetOrdersResponse> {
   try {
-    const response = await api.get<IGetOrdersResponse>(AppRoutesEnum.ORDERS, {
+    const response = await api.get<IGetOrdersResponse>(ApiRoutesEnum.ORDERS, {
       params: {
         pageIndex,
         orderId,
