@@ -2,12 +2,12 @@ import { IOrderStatus, OrderConfig } from "@/interfaces/orders-data";
 import colors from "tailwindcss/colors";
 
 export const mockDatasetRevenue =   [
-  { date: "01/12", revenue: 300 },
-  { date: "02/12", revenue: 500 },
-  { date: "03/12", revenue: 700 },
-  { date: "04/12", revenue: 100 },
-  { date: "05/12", revenue: 900 },
-  { date: "06/12", revenue: 400 },
+  { date: "01/12", receipt: 300 },
+  { date: "02/12", receipt: 500 },
+  { date: "03/12", receipt: 700 },
+  { date: "04/12", receipt: 100 },
+  { date: "05/12", receipt: 900 },
+  { date: "06/12", receipt: 400 },
 ]; 
 
 export const mockDatasetProduct = [
