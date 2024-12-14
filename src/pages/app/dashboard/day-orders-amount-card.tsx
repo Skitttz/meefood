@@ -26,13 +26,13 @@ function DayOrdersAmountCard() {
             <span className="text-2xl font-bold tracking-tight">
               {amount.toLocaleString("en-US")}
             </span>
-            <p className="text-muted-foreground text-xs">
+            <p className="text-xs text-muted-foreground">
               {amount >= 0 ? (
                 <>
                   <span className="text-emerald-500 dark:text-emerald-400">
                     +{amount}%
                   </span>{" "}
-                  in relation to last month
+                  in relation to yesterday
                 </>
               ) : (
                 <>
@@ -45,7 +45,7 @@ function DayOrdersAmountCard() {
             </p>
           </>
         ) : (
-          <p className="text-muted-foreground text-sm">
+          <p className="text-sm text-muted-foreground">
             Data not available for this day.
           </p>
         )}

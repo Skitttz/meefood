@@ -66,7 +66,7 @@ export function SignUp() {
         <div className="flex w-[350px] flex-col justify-center gap-6">
           <div className="flex flex-col gap-2 text-center">
             <h1 className="text-center text-2xl font-semibold tracking-tight">
-              Sign In
+              Sign Up
             </h1>
             <p className="text-sm text-muted-foreground">
               Become a Partner and Start Selling
