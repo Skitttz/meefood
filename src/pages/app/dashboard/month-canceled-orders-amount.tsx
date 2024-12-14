@@ -1,6 +1,5 @@
 import { getMonthCanceledOrdersAmount } from "@/api/get-month-canceled-orders-amount";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { formatterValueCurrency } from "@/utils/formatter";
 import { useQuery } from "@tanstack/react-query";
 import { DollarSign } from "lucide-react";
 import { MetricCardSkeleton } from "./metric-card-skeleton";
@@ -27,10 +26,8 @@ function MonthCanceledOrdersAmount() {
           <MetricCardSkeleton />
         ) : amount !== undefined && diffFromLastMonth !== undefined ? (
           <>
-            <span className="text-2xl font-bold tracking-tight">
-              {formatterValueCurrency(amount)}
-            </span>
-            <p className="text-muted-foreground text-xs">
+            <span className="text-2xl font-bold tracking-tight">{amount}</span>
+            <p className="text-xs text-muted-foreground">
               {diffFromLastMonth < 0 ? (
                 <>
                   <span className="text-emerald-500 dark:text-emerald-400">
@@ -49,7 +46,7 @@ function MonthCanceledOrdersAmount() {
             </p>
           </>
         ) : (
-          <p className="text-muted-foreground text-sm">
+          <p className="text-sm text-muted-foreground">
             Data not available for this month.
           </p>
         )}
